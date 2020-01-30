@@ -1,4 +1,4 @@
-class BrewStats::CLI
+class BrewStats::Cli
 
   def call
    puts "brewery stats"
@@ -11,6 +11,7 @@ class BrewStats::CLI
       2. Alaska: 42 Craft Breweries...
    DOC
   end
+
 end
 
 

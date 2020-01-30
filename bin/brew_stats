@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
-BrewStats::CLI.new.call
+require '../lib/brew_stats'
+
+BrewStats::Cli.new.call
