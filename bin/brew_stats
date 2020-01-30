@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
-require '../lib/brew_stats'
+require "bundler/setup"
+require "../lib/brew_stats"
+require "brewstats/cli"
 
 BrewStats::Cli.new.call

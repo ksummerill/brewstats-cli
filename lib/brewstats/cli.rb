@@ -1,17 +1,39 @@
 class BrewStats::Cli
 
   def call
-   puts "brewery stats"
    list_stats
+   menu
+   goodbye
   end
 
   def list_stats
-   puts <<-DOC
-      1. Alabama: 41 Craft Breweries...
-      2. Alaska: 42 Craft Breweries...
-   DOC
-  end
+   puts "brewery stats"
 
+   @breweries = BrewStats::Stats.all_states
+  end
+  
+  def menu
+    input = nil
+    while input != "exit"
+      puts "type a state you want to see brewery information for."
+      input = gets.strip.downcase
+      case input
+      when "alabama"
+       puts "Info on Alabama..."
+      when "alaska"
+       puts "Info on Alaska..."
+      when "list"
+       list_stats
+      else
+        puts "invalid entry. Please type list or exit"
+      end
+    end
+  end
+  
+  def goodbye
+    puts "See you later!"
+  end
+  
 end
 
 
