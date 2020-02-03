@@ -16,54 +16,48 @@ class BrewStats::Stats
 
     stats << self.scrape_ba
 
-    # go to ba.com, find stats for states
-    # extract the name, # breweries, rank, $impact, barrels/year, per cap
-    # instantiate a state
-
     # return my stats array
-    stats
+    puts stats
   end
 
   # all properties for scraping here
+  # go to ba.com, find stats for states
+  # extract the name, # breweries, rank, $impact, barrels/year, per cap
+  # instantiate a state
   def self.scrape_ba
     site_1 = "https://www.brewersassociation.org/statistics-and-data/state-craft-beer-stats/"
     doc = Nokogiri::HTML(open(site_1))
 
-    stat = self.new
-    stat.name = doc.css("#state-header").css("h1").text
-    stat.number_breweries = doc.css("#per-state").css(".total").css("span.count").text
-    stat.rank = doc.css("#per-state").css(".total").css("span.rank").text
-    stat.per_capita = doc.css("#per-state").css("span.per-capita").css("span.count").text
-    stat.eco_impact = doc.css("#economic-impact").css("span.total").css("span.count").text
-    stat.barrels = doc.css("#production").css("span.total").css("span.count").text
+    # https://stackoverflow.com/questions/38013461/properly-separate-string-elements-in-an-array
+    state = self.new
+    state.name = doc.css("#state-header").css("h1").map(&:text)
+    state.number_breweries = doc.css("#per-state").css(".total").css("span.count").map(&:text)
+    state.rank = doc.css("#per-state").css(".total").css("span.rank").map(&:text)
+    state.per_capita = doc.css("#per-state").css("span.per-capita").css("span.count").map(&:text)
+    state.eco_impact = doc.css("#economic-impact").css("span.total").css("span.count").map(&:text)
+    state.barrels = doc.css("#production").css("span.total").css("span.count").map(&:text)
 
-      # From scrape lecture - not sure yet where I want this to go
+    # keep this 'state' here - returns one massive object with all properties in the order listed above
+    state
+    # returns an array of state names
+    state.name
 
-      stat.name.each do |state|
-        puts state.css("#state-header")[0].css("h1").text
+      # From output of `state` on line 41, how do I connect the name of "Alabama"
+      # to the `number_breweries` of `41` and so on through the whole output?
+
+      state.name.each do |name|
+        # creates a new object for each state name
+        name = self.new
+        puts "Hello #{name}"
       end
 
-    stat
+      state.number_breweries.each do |num|
+        # creates a new object for each number_breweries
+        num = self.new
+        puts "#{num} is a lot of breweries!"
+      end
 
   end
 
 
 end
-
-
-# saving hardcoded method for practice
-# def self.scrape_stats
-#   # states_1 and states_2 are hardcoded but are returning objects
-#   states_1 = self.new
-#   states_1.name = "Alabama"
-#   states_1.number_breweries = "42"
-#   states_1.rank = "23rd"
-#
-#   states_2 = self.new
-#   states_2.name = "Alaska"
-#   states_2.number_breweries = "12"
-#   states_2.rank = "43rd"
-#
-#
-#   [states_1, states_2]
-# end

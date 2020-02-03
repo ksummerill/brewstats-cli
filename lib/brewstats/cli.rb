@@ -10,16 +10,17 @@ class BrewStats::Cli
   end
 
   def list_stats
+    puts "Welcome to BrewStats!"
     @breweries = BrewStats::Stats.all_states
     @breweries.each.with_index(1) do |state, i|
       puts "#{i}. #{state.name}"
     end
   end
 
+  # method to prompt user, collect their input and return scraped data based on input
   def menu
     input = nil
     while input != "exit"
-      puts "Welcome to BrewStats!"
       puts "Type the name of a state you want to see brewery information for."
       input = gets.strip.downcase
       case input
@@ -39,8 +40,8 @@ class BrewStats::Cli
     puts "See you later!"
   end
 
-end
 
+end
 
 
 
