@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
+require 'tty-prompt'
 # take out pry once ready to publish gem
 require 'pry'
 

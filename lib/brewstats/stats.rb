@@ -17,7 +17,7 @@ class BrewStats::Stats
     stats << self.scrape_ba
 
     # return my stats array
-    puts stats
+    # puts stats
   end
 
   # all properties for scraping here
@@ -40,24 +40,18 @@ class BrewStats::Stats
     # keep this 'state' here - returns one massive object with all properties in the order listed above
     # state
     # returns an array of state names
-    # state.name
+    state.name
 
       # From output of `state` on line 41, how do I connect the name of "Alabama"
       # to the `number_breweries` of `41` and so on through the whole output?
-
-      state.name.each do |name|
-        # creates a new object for each state name
-        all_states_array = []
-        name = self.new
-        all_states_array << name
-        puts all_states_array
-      end
-
-      # state.number_breweries.each do |num|
-      #   # creates a new object for each number_breweries
-      #   num = self.new
-      #   puts "#{num} is a lot of breweries!"
+      # all_states_array = []
+      # state.name.each do |name|
+      #   # creates a new object for each state name
+      #   name = self.new
+      #   all_states_array << name
       # end
+
+      # puts all_states_array
 
   end
 
