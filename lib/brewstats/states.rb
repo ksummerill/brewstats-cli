@@ -5,6 +5,7 @@ class BrewStats::States
   attr_accessor :name, :number_breweries, :rank, :per_capita, :eco_impact, :barrels
 
   @@all = []
+  @@names = []
 
   def initialize(name, number_breweries, rank, per_capita, eco_impact, barrels)
     @name = name
@@ -16,10 +17,11 @@ class BrewStats::States
     save
   end
 
-  # method that will
-  # def make_states
-  #
-  # end
+  # method that will give me a name to use in CLI
+  def state_names
+    @@names
+    binding.pry
+  end
 
   def self.all
     BrewStats::Scraper.scrape_ba if @@all.empty?
@@ -28,6 +30,7 @@ class BrewStats::States
 
   def save
     @@all << self
+    @@names << self.name
   end
 
 

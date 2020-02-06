@@ -4,70 +4,59 @@ class BrewStats::Cli
 
   # method that gets called from bin/brew_stats to kick off program
   def call
-   choices
-   data_from_user_input
+   get_choices
+   list_choices
+   get_user_choice
    next_move
    goodbye
   end
 
-  # https://github.com/piotrmurach/tty-prompt - used to number and prompt user
-  # By default the choice name is used as return value
-  def choices
-    puts "Welcome to BrewStats!"
-    choices = []
-    # need to grab just the state name in the line below
-    choices << BrewStats::States.initialize
 
-    # binding.pry
-    prompt = TTY::Prompt.new
-    prompt.enum_select("Select a state by it's number", choices)
+  # choices method will grab the results from my States.all
+  def get_choices
+    puts "Welcome to BrewStats!"
+    @states = BrewStats::States.all
   end
 
+  # Prompts user to select a state
+  # https://github.com/piotrmurach/tty-prompt - used to number and prompt user
+  def list_choices
+    choices = []
+    # need to grab just the state name to add to choices array
+    choices << @states
+    prompt = TTY::Prompt.new
+    prompt.enum_select("Select a state by it's number", choices)
+    # By default the choice name is the return value
+  end
 
-  # method should call over to scraper.rb to collect and return data for user's selection
-  def data_from_user_input
-    if choices == "Alabama"
-      puts "You made it to Alabama"
-    elsif choices == "Alaska"
-      puts "I can see Russia from my house"
+  # method should use return value from list_choices method to show data
+  def get_user_choice(selection)
+    selection = list_choices
+    if selection == "Alabama"
+      puts "Alabama stats: #{@states}[0]"
+    elsif selection == "Alaska"
+      puts "Alaska stats: #{@states}[1]"
 
-    # state_data = BrewStats::Scraper.scrape_ba
-    # BrewStats::States.make_states
     end
   end
 
-  def show_data(choice)
+  # could use this method to show the data based on the selection from get_user_choice
+  # def show_data(choice)
+  #
+  #
+  # end
 
-
-  end
-
-
-
+  # after showing user data for selected state, ask what they want to do next
+  # options are to exit the program or select a new state,
+  # which returns the user to list_choices
   def next_move
     choices = %w(exit, next_state)
     prompt = TTY::Prompt.new
     prompt.select("What do you want to do next?") do |menu|
       menu.choice
     end
-
-
-
-    # input = nil
-    # while input != "exit"
-    #   puts "Type the name of a state you want to see brewery information for."
-    #   input = gets.strip.downcase
-    #   case input
-    #   when "alabama"
-    #    puts BrewStats::Stats.scrape_ba
-    #   when "alaska"
-    #    puts BrewStats::Stats.scrape_ba
-    #   when "list"
-    #    choices
-    #   else
-    #     puts "invalid entry. Please type list or exit"
-    #   end
-    # end
   end
+
 
   def goodbye
     puts "See you later!"
@@ -84,4 +73,20 @@ end
 #   # @breweries.each.with_index(1) do |state, i|
 #   #   puts "#{i}. #{state.name}"
 #   # end
+# end
+
+# input = nil
+# while input != "exit"
+#   puts "Type the name of a state you want to see brewery information for."
+#   input = gets.strip.downcase
+#   case input
+#   when "alabama"
+#    puts BrewStats::Stats.scrape_ba
+#   when "alaska"
+#    puts BrewStats::Stats.scrape_ba
+#   when "list"
+#    choices
+#   else
+#     puts "invalid entry. Please type list or exit"
+#   end
 # end
