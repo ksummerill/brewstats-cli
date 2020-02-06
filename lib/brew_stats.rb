@@ -6,4 +6,5 @@ require 'pry'
 
 require_relative './brewstats/version'
 require_relative './brewstats/cli'
-require_relative './brewstats/stats'
+require_relative './brewstats/scraper'
+require_relative './brewstats/states'

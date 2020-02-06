@@ -5,27 +5,42 @@ class BrewStats::Cli
   # method that gets called from bin/brew_stats to kick off program
   def call
    choices
-   data_dump
+   data_from_user_input
    next_move
    goodbye
   end
 
   # https://github.com/piotrmurach/tty-prompt - used to number and prompt user
+  # By default the choice name is used as return value
   def choices
     puts "Welcome to BrewStats!"
     choices = []
-    # right now this next line only works because scrape_ba is returning the list of states with `state.name`
-    choices << BrewStats::Stats.scrape_ba
+    # need to grab just the state name in the line below
+    choices << BrewStats::States.initialize
+
+    # binding.pry
     prompt = TTY::Prompt.new
     prompt.enum_select("Select a state by it's number", choices)
   end
 
 
-  # method should call over to stats.rb to collect and return data for user's selection
-  def data_dump
-    # stubbing out data
-    BrewStats::Stats.scrape_ba
+  # method should call over to scraper.rb to collect and return data for user's selection
+  def data_from_user_input
+    if choices == "Alabama"
+      puts "You made it to Alabama"
+    elsif choices == "Alaska"
+      puts "I can see Russia from my house"
+
+    # state_data = BrewStats::Scraper.scrape_ba
+    # BrewStats::States.make_states
+    end
   end
+
+  def show_data(choice)
+
+
+  end
+
 
 
   def next_move
@@ -69,13 +84,4 @@ end
 #   # @breweries.each.with_index(1) do |state, i|
 #   #   puts "#{i}. #{state.name}"
 #   # end
-# end
-
-
-# code that came with bundle install
-# module Brewstats
-#   module Cli
-#     class Error < StandardError; end
-#     # Your code goes here...
-#   end
 # end

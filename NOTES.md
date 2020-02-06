@@ -31,5 +31,9 @@ BrewStats will provide the user with the information they need in a concise way
 Classes
 
 CLI - to take in user input and display information back to the user
-BeerRun - this is the scrapper, getting data from the website
-BreweryOptions - responsible for hanging on to the information from BeerRun
+Scraper - this is the scrapper, getting data from the website
+States - responsible for hanging on to the information from Scraper
+
+
+Cli
+- Work on taking user selection and returning something hardcoded
