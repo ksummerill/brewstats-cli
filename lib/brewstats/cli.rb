@@ -6,7 +6,7 @@ class BrewStats::Cli
   def call
    get_choices
    list_choices
-   # get_user_choice
+   get_user_choice
    next_move
    goodbye
   end
@@ -27,28 +27,45 @@ class BrewStats::Cli
       state_names << state.name
     end
 
-    prompt = TTY::Prompt.new
-    prompt.enum_select("Select a state by it's number", state_names)
-
+    # creates a new prompt object each time the program runs
     # By default the choice name is the return value
+    @prompt = TTY::Prompt.new
+    @prompt.enum_select("Select a state by it's number", state_names)
+
+    # this is what puts @prompt gives me...
+    # Select a state by it's number Arizona
+    #<TTY::Prompt:0x00007fc5c02b2630>
+
   end
 
   # method should use return value from list_choices method to show data
   def get_user_choice
     selection = list_choices
     if selection == "Alabama"
-      puts "Alabama stats: #{@states}[0]"
+      # need to somehow look for correct state name to grab/show
+      puts "Alabama stats: #{display_states}"
     elsif selection == "Alaska"
-      puts "Alaska stats: #{@states}[1]"
-
+      puts "Alaska stats: " + "#{display_states}"
+    elsif selection == "California"
+      puts "California stats: #{display_states}"
+    else
+      puts "invalid entry. Please type exit"
     end
   end
 
-  # could use this method to show the data based on the selection from get_user_choice
-  # def show_data(choice)
-  #
-  #
-  # end
+  def display_states
+    @states.each do |state|
+      # puts "-------------------"
+      puts state.name
+      puts state.number_breweries
+      puts state.rank
+      puts state.per_capita
+      puts state.eco_impact
+      puts state.barrels
+      # puts "-------------------"
+    end
+    binding.pry
+  end
 
   # after showing user data for selected state, ask what they want to do next
   # options are to exit the program or select a new state,
@@ -72,29 +89,3 @@ class BrewStats::Cli
 
 
 end
-
-
-# OG method for choices
-# def list_stats
-#   puts "Welcome to BrewStats!"
-#   @breweries = BrewStats::Stats.all_states
-#   # @breweries.each.with_index(1) do |state, i|
-#   #   puts "#{i}. #{state.name}"
-#   # end
-# end
-
-# input = nil
-# while input != "exit"
-#   puts "Type the name of a state you want to see brewery information for."
-#   input = gets.strip.downcase
-#   case input
-#   when "alabama"
-#    puts BrewStats::Stats.scrape_ba
-#   when "alaska"
-#    puts BrewStats::Stats.scrape_ba
-#   when "list"
-#    choices
-#   else
-#     puts "invalid entry. Please type list or exit"
-#   end
-# end
