@@ -6,31 +6,35 @@ class BrewStats::Cli
   def call
    get_choices
    list_choices
-   get_user_choice
+   # get_user_choice
    next_move
    goodbye
   end
 
-
   # choices method will grab the results from my States.all
   def get_choices
     puts "Welcome to BrewStats!"
+    BrewStats::Scraper.scrape_ba
+    # binding.pry
     @states = BrewStats::States.all
   end
 
   # Prompts user to select a state
   # https://github.com/piotrmurach/tty-prompt - used to number and prompt user
   def list_choices
-    choices = []
-    # need to grab just the state name to add to choices array
-    choices << @states
+    state_names = []
+    @states.each do |state|
+      state_names << state.name
+    end
+
     prompt = TTY::Prompt.new
-    prompt.enum_select("Select a state by it's number", choices)
+    prompt.enum_select("Select a state by it's number", state_names)
+
     # By default the choice name is the return value
   end
 
   # method should use return value from list_choices method to show data
-  def get_user_choice(selection)
+  def get_user_choice
     selection = list_choices
     if selection == "Alabama"
       puts "Alabama stats: #{@states}[0]"
@@ -49,18 +53,22 @@ class BrewStats::Cli
   # after showing user data for selected state, ask what they want to do next
   # options are to exit the program or select a new state,
   # which returns the user to list_choices
-  def next_move
-    choices = %w(exit, next_state)
-    prompt = TTY::Prompt.new
-    prompt.select("What do you want to do next?") do |menu|
-      menu.choice
-    end
-  end
-
-
-  def goodbye
-    puts "See you later!"
-  end
+  # def next_move
+  #   # user_selection = return from prompt.enum_select
+  #   choices = ["exit program", "select another state"]
+  #   prompt = TTY::Prompt.new
+  #   prompt.enum_select("What do you want to do next?", choices)
+  #   # build if statement to handle choice. Use return from prompt.enum_select?
+  #     # if choices == "exit program"
+  #     #   goodbye
+  #     # else list_choices
+  #     # end
+  # end
+  #
+  #
+  # def goodbye
+  #   puts "See you later!"
+  # end
 
 
 end
