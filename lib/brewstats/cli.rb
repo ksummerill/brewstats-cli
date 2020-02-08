@@ -2,6 +2,8 @@
 
 class BrewStats::Cli
 
+  @@state_stats = []
+
   # method that gets called from bin/brew_stats to kick off program
   def call
    get_choices
@@ -15,7 +17,6 @@ class BrewStats::Cli
   def get_choices
     puts "Welcome to BrewStats!"
     BrewStats::Scraper.scrape_ba
-    # binding.pry
     @states = BrewStats::States.all
   end
 
@@ -35,57 +36,68 @@ class BrewStats::Cli
     # this is what puts @prompt gives me...
     # Select a state by it's number Arizona
     #<TTY::Prompt:0x00007fc5c02b2630>
-
+    # if i can find the output from @prompt and store it in an instance variable
+    # I could use it in get_user_choice, set equal to selection
   end
 
   # method should use return value from list_choices method to show data
   def get_user_choice
-    selection = list_choices
-    if selection == "Alabama"
-      # need to somehow look for correct state name to grab/show
-      puts "Alabama stats: #{display_states}"
-    elsif selection == "Alaska"
-      puts "Alaska stats: " + "#{display_states}"
-    elsif selection == "California"
-      puts "California stats: #{display_states}"
-    else
-      puts "invalid entry. Please type exit"
+    # selection = self.list_choices
+    if list_choices == "Alabama"
+      # try this puts to see what happens....
+      puts BrewStats::States.stats_for_each_state[0]
+    #     next_move
+    # elsif list_choices == "Alaska"
+    #   puts "Alaska stats: #{display_states}"
+    #
+    # elsif list_choices == "Arizona"
+    #   puts "Arizona stats: #{display_states}"
+    #
+    # elsif list_choices == "California"
+    #   puts "California stats: #{display_states}"
+    # else
+    #   puts "invalid entry. Please type exit"
     end
   end
 
+  # this method should be able to pull from BrewStats::States.state_stats
+  # to grab that array
   def display_states
-    @states.each do |state|
-      # puts "-------------------"
-      puts state.name
-      puts state.number_breweries
-      puts state.rank
-      puts state.per_capita
-      puts state.eco_impact
-      puts state.barrels
-      # puts "-------------------"
-    end
-    binding.pry
+    # @states is = to BrewStats::States.all
+      @states.each do |state|
+        puts "-------------------"
+        puts state.name
+        puts state.number_breweries
+        puts state.rank
+        puts state.per_capita
+        puts state.eco_impact
+        puts state.barrels
+        puts "-------------------"
+      end
   end
+
+
 
   # after showing user data for selected state, ask what they want to do next
   # options are to exit the program or select a new state,
   # which returns the user to list_choices
-  # def next_move
-  #   # user_selection = return from prompt.enum_select
-  #   choices = ["exit program", "select another state"]
-  #   prompt = TTY::Prompt.new
-  #   prompt.enum_select("What do you want to do next?", choices)
-  #   # build if statement to handle choice. Use return from prompt.enum_select?
-  #     # if choices == "exit program"
-  #     #   goodbye
-  #     # else list_choices
-  #     # end
-  # end
-  #
-  #
-  # def goodbye
-  #   puts "See you later!"
-  # end
+  def next_move
+    # user_selection = return from prompt.enum_select
+    choices = ["exit program", "select another state"]
+    prompt = TTY::Prompt.new
+    prompt.enum_select("What do you want to do next?", choices)
+    # build if statement to handle choice. Use return from prompt.enum_select?
+      if choices == "select another state"
+        list_choices
+      else choices == "exit program"
+        goodbye
+      end
+  end
+
+
+  def goodbye
+    puts "See you later!"
+  end
 
 
 end

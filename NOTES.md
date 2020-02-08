@@ -36,6 +36,24 @@ Cli
   - Figure out return value of #list_choices
   - Use that return value to print out something hardcoded
 
+  <!-- @states returns --> it is also an array of objects
+  [#<BrewStats::States:0x00007fd85737aa28
+  @barrels="71,894",
+  @eco_impact="758",
+  @name="Alabama",
+  @number_breweries="41",
+  @per_capita="1.1",
+  @rank="(Ranks 38th)">,
+ #<BrewStats::States:0x00007fd857bd90e8
+  @barrels="210,063",
+  @eco_impact="326",
+  @name="Alaska",
+  @number_breweries="42",
+  @per_capita="7.8",
+  @rank="(Ranks 37th)">,
+  ......
+
+
 
   display_states returns one long puts for each state...
   perhaps if i shoveled each element in #display_states into a class array and then use that array to iterate over in #get_user_choice
