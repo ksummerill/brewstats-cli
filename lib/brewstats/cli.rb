@@ -2,14 +2,15 @@
 
 class BrewStats::Cli
 
-  @@state_stats = []
-
   # method that gets called from bin/brew_stats to kick off program
   def call
-   get_choices
-   list_choices
-   get_user_choice
-   next_move
+    choices = ""
+    until choices == "exit program"
+      get_choices
+      list_choices
+      display_states
+      next_move
+    end
    goodbye
   end
 
@@ -22,6 +23,7 @@ class BrewStats::Cli
 
   # Prompts user to select a state
   # https://github.com/piotrmurach/tty-prompt - used to number and prompt user
+  # state_names contains a list of strings of state names in one large array
   def list_choices
     state_names = []
     @states.each do |state|
@@ -40,31 +42,12 @@ class BrewStats::Cli
     # I could use it in get_user_choice, set equal to selection
   end
 
-  # method should use return value from list_choices method to show data
-  def get_user_choice
-    # selection = self.list_choices
-    if list_choices == "Alabama"
-      # try this puts to see what happens....
-      puts BrewStats::States.stats_for_each_state[0]
-    #     next_move
-    # elsif list_choices == "Alaska"
-    #   puts "Alaska stats: #{display_states}"
-    #
-    # elsif list_choices == "Arizona"
-    #   puts "Arizona stats: #{display_states}"
-    #
-    # elsif list_choices == "California"
-    #   puts "California stats: #{display_states}"
-    # else
-    #   puts "invalid entry. Please type exit"
-    end
-  end
-
-  # this method should be able to pull from BrewStats::States.state_stats
-  # to grab that array
+  # this method should be able to iterate through @@all, find the object
+  # whose name matches the user's input (by calling list_choices)
   def display_states
     # @states is = to BrewStats::States.all
-      @states.each do |state|
+      @states.find do |state|
+        if state.name == self.list_choices
         puts "-------------------"
         puts state.name
         puts state.number_breweries
@@ -74,6 +57,9 @@ class BrewStats::Cli
         puts state.barrels
         puts "-------------------"
       end
+      next_move
+    end
+
   end
 
 

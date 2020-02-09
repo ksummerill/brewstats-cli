@@ -32,9 +32,18 @@ States - responsible for hanging on to the information from Scraper
 
 
 Cli
-- Work on taking user selection and returning something hardcoded
-  - Figure out return value of #list_choices
-  - Use that return value to print out something hardcoded
+
+- exit program prints the right message (calls the right method) but
+the program cycles back to "Select a state..."
+- next_move method, selecting "select another state" prints "See you later!"
+but does cycle back to "Select a state..."
+
+- One first selection, picking 1, I have to enter 1 twice before I see stats
+- Selecting 2, I have to enter 2 twice, then it jumps to next_move and asks
+"what do you want to do next?"
+- 
+
+
 
   <!-- @states returns --> it is also an array of objects
   [#<BrewStats::States:0x00007fd85737aa28
@@ -53,68 +62,19 @@ Cli
   @rank="(Ranks 37th)">,
   ......
 
-
-
-  display_states returns one long puts for each state...
-  perhaps if i shoveled each element in #display_states into a class array and then use that array to iterate over in #get_user_choice
-
-Alabama
-41
-(Ranks 38th)
-1.1
-758
-71,894
-Alaska
-42
-(Ranks 37th)
-7.8
-326
-210,063
-Arizona
-117
-(Ranks 19th)
-2.2
-1,147
-173,427
-Arkansas
-40
-(Ranks 39th)
-1.8
-838
-45,720
-California
-841
-(Ranks 1st)
-2.9
-9,014
-3,421,295
-Colorado
-396
-(Ranks 2nd)
-9.2
-3,285
-1,522,834
-Connecticut
-87
-(Ranks 26th)
-3.2
-753
-213,676
-Delaware
-27
-(Ranks 45th)
-3.7
-388
-298,706
-District of Columbia
-13
-(Ranks 51st)
-2.4
-213
-33,857
-Florida
-285
-(Ranks 9th)
-1.7
-3,625
-1,373,558
+  # method should use return value from list_choices method to show data
+  # def get_user_choice
+  #   # state_name.find |state|
+  #   #   list_choices == state.name
+  #   # end
+  #
+  #   if list_choices == "Alabama"
+  #
+  #     # puts BrewStats::States.state_name[0..5]
+  #   # elsif list_choices == "Alaska"
+  #   #   puts "Alaska stats: "
+  #   #   puts BrewStats::States.state_name[6..10]
+  #   else
+  #     puts "invalid entry. Please type exit"
+  #   end
+  # end
