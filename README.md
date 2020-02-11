@@ -1,8 +1,6 @@
-# Brewstats::Cli
+# BrewStats
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/brewstats/cli`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Learn about the beer industry across the US. By state, you'll be able to see different stats and where each state ranks in number of breweries and the impact on that state's economy.
 
 ## Installation
 
@@ -20,9 +18,6 @@ Or install it yourself as:
 
     $ gem install brewstats-cli
 
-## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 
