@@ -42,8 +42,8 @@ class BrewStats::Cli
     # @states is = to BrewStats::States.all
       @states.find do |state|
         if state.name == @user_selection
-        puts "-------------------"
-        # puts #{state.name}
+        puts "\n"
+        puts "-----#{state.name}-----"
         puts "#{state.number_breweries} breweries #{state.rank}"
         puts "#{state.per_capita} breweries per capita"
         puts "$#{state.eco_impact} million in economic impact"

@@ -31,17 +31,6 @@ Scraper - this is the scrapper, getting data from the website
 States - responsible for hanging on to the information from Scraper
 
 
-Cli
-
-optional:
-- next_move: I want there to be a slight delay between showing stats
-and then asking for the user's  next move. Look for the option to pause/delay
-the program
-
-- add a method to cli to check for a valid input?
-
-
-
   <!-- @states returns --> it is also an array of objects
   [#<BrewStats::States:0x00007fd85737aa28
   @barrels="71,894",
