@@ -43,6 +43,7 @@ DEPENDENCIES
   bundler (~> 2.0)
   pry
   rake (~> 10.0)
+  tty-prompt
 
 BUNDLED WITH
    2.1.4

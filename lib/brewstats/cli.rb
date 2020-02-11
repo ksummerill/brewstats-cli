@@ -3,12 +3,15 @@
 class BrewStats::Cli
 
   # method that gets called from bin/brew_stats to kick off program
+  # calling get_choices only on first iteration of the program so we scrape once
   def call
-    choices = ""
-    until choices == "exit program"
-      get_choices
+    get_choices
+
+    @choice = ""
+    until @choice == "exit"
       list_choices
       display_states
+      sleep 2
       next_move
     end
    goodbye
@@ -21,63 +24,40 @@ class BrewStats::Cli
     @states = BrewStats::States.all
   end
 
-  # Prompts user to select a state
-  # https://github.com/piotrmurach/tty-prompt - used to number and prompt user
+  # Prompts user to select a state (https://github.com/piotrmurach/tty-prompt)
   # state_names contains a list of strings of state names in one large array
+  # By default the choice name is the return value of the method
   def list_choices
     state_names = []
     @states.each do |state|
       state_names << state.name
     end
 
-    # creates a new prompt object each time the program runs
-    # By default the choice name is the return value
-    @prompt = TTY::Prompt.new
-    @prompt.enum_select("Select a state by it's number", state_names)
-
-    # this is what puts @prompt gives me...
-    # Select a state by it's number Arizona
-    #<TTY::Prompt:0x00007fc5c02b2630>
-    # if i can find the output from @prompt and store it in an instance variable
-    # I could use it in get_user_choice, set equal to selection
+    prompt = TTY::Prompt.new
+    @user_selection = prompt.enum_select("Select a state by it's number", state_names)
   end
 
-  # this method should be able to iterate through @@all, find the object
-  # whose name matches the user's input (by calling list_choices)
+  # this method will iterate through @@all, find the object whose name matches the user's input
   def display_states
     # @states is = to BrewStats::States.all
       @states.find do |state|
-        if state.name == self.list_choices
+        if state.name == @user_selection
         puts "-------------------"
-        puts state.name
-        puts state.number_breweries
-        puts state.rank
-        puts state.per_capita
-        puts state.eco_impact
-        puts state.barrels
+        # puts #{state.name}
+        puts "#{state.number_breweries} breweries #{state.rank}"
+        puts "#{state.per_capita} breweries per capita"
+        puts "$#{state.eco_impact} million in economic impact"
+        puts "#{state.barrels} barrels of craft beer produced annually"
         puts "-------------------"
       end
-      next_move
     end
-
   end
 
-
-
-  # after showing user data for selected state, ask what they want to do next
-  # options are to exit the program or select a new state,
-  # which returns the user to list_choices
+  # after showing user data for selected state, ask user what they want to do next
+  # options are to exit the program or select a new state, which returns the user to list_choices
   def next_move
-    # user_selection = return from prompt.enum_select
-    choices = ["exit program", "select another state"]
-    prompt = TTY::Prompt.new
-    prompt.enum_select("What do you want to do next?", choices)
-    # build if statement to handle choice. Use return from prompt.enum_select?
-      if choices == "select another state"
-        list_choices
-      else choices == "exit program"
-        goodbye
-      end
+    puts "What do you want to do next? Type any key to restart or type 'exit' to leave"
+    @choice = gets.strip
   end
 
 
