@@ -45,7 +45,7 @@ class BrewStats::Cli
         puts "\n"
         puts "-----#{state.name}-----"
         puts "#{state.number_breweries} breweries #{state.rank}"
-        puts "#{state.per_capita} breweries per capita"
+        puts "#{state.per_capita} breweries per 100,000 adults (+21)"
         puts "$#{state.eco_impact} million in economic impact"
         puts "#{state.barrels} barrels of craft beer produced annually"
         puts "-------------------"
