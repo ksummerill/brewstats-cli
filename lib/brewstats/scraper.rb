@@ -2,15 +2,13 @@
 
 class BrewStats::Scraper
 
-  # all properties for scraping here
-  # go to ba.com, find stats for states
+  # all properties for scraping here. Go to ba.com, find stats for states
   # extract the name, # breweries, rank, $impact, barrels/year, per cap
   # instantiate a state
   def self.scrape_ba
     site_1 = "https://www.brewersassociation.org/statistics-and-data/state-craft-beer-stats/"
     doc = Nokogiri::XML(open(site_1))
 
-    # https://stackoverflow.com/questions/38013461/properly-separate-string-elements-in-an-array
     states = doc.css(".stat-container")
 
     states.each do |state|

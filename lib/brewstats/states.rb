@@ -4,17 +4,7 @@ class BrewStats::States
 
   attr_accessor :name, :number_breweries, :rank, :per_capita, :eco_impact, :barrels
 
-  # stores an array of all state objects and their data
-      #<BrewStats::States:0x00007fd4d4cabd80
-      # @barrels="3,421,295",
-      # @eco_impact="9,014",
-      # @name="California",
-      # @number_breweries="841",
-      # @per_capita="2.9",
-      # @rank="(Ranks 1st)">,
-
   @@all = []
-
 
   def initialize(name, number_breweries, rank, per_capita, eco_impact, barrels)
     @name = name

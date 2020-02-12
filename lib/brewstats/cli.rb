@@ -1,4 +1,4 @@
-# Class that handles user interaction and pulls data from Stats class
+# Class that handles user interaction and pulls data from States class
 
 class BrewStats::Cli
 
@@ -39,7 +39,6 @@ class BrewStats::Cli
 
   # this method will iterate through @@all, find the object whose name matches the user's input
   def display_states
-    # @states is = to BrewStats::States.all
       @states.find do |state|
         if state.name == @user_selection
         puts "\n"
